@@ -11,16 +11,54 @@
     />
   </head>
   <body>
-    <section id="todolist">
+    <section id="landing">
+      <div class="userhistory"></div>
+      <div id="taskinfomodal" class="taskinfo">
+        <div class="modal-content">
+          <span class="modalclose">&times;</span>
+          <p>Some text in the Modal..</p>
+        </div>
+      </div>
+      
+      <div class="landingtitle">
+        <h1>Create your first Task</h1>
+        <input type="text" id="" placeholder="Enter your Task Name" />
+        <button class="createtask"><i class="fas fa-plus"></i></button>
+      </div>
+      <div class="historyrow hide">
+        <h1>Your Tasks</h1>
+        <div class="taskcontainer">
+          <div class="task">
+            <h1 class="tasktitle">Home</h1>
+            <p class="taskdesc">Every day routine</p>
+          </div>
+          <div class="task">
+            <h1 class="tasktitle">Home</h1>
+            <p class="taskdesc">Every day routine</p>
+          </div>
+          <div class="task">
+            <h1 class="tasktitle">Home</h1>
+            <p class="taskdesc">Every day routine</p>
+          </div>
+          <div class="task">
+            <h1 class="tasktitle">Home</h1>
+            <p class="taskdesc">Every day routine</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <section id="todolist" class="list hide">
       <div class="header">
         <div class="leftcol">
           <h1 class="listtitle">Home</h1>
           <p class="listdesc">Every day routine</p>
-          <input type="search" placeholder="Search" name="" id="search" />
+          <input type="search" placeholder="Search" name="" id="searchlist" />
         </div>
         <div class="rightcol">
-          <p class="timer"><i id="timericon" class="fas fa-stopwatch"></i>9 Days</p>
+          <p class="timer">
+            <i id="timericon" class="fas fa-stopwatch"></i>9 Days
+          </p>
           <p class="share"><i class="fas fa-share"></i></p>
           <p class="edittitle">| Edit Title</p>
         </div>
@@ -33,9 +71,9 @@
             <p class="listcount">6</p>
           </div>
           <div class="itembox">
-            <label class="title">
-                <input type="checkbox">
-                 Item1
+            <label class="itemtitle">
+              <input type="checkbox" />
+              Item1
             </label>
           </div>
         </div>
@@ -45,9 +83,9 @@
             <p class="listcount">6</p>
           </div>
           <div class="itembox">
-            <label class="title">
-                <input type="checkbox">
-                 Item1
+            <label class="itemtitle">
+              <input type="checkbox" />
+              Item1
             </label>
           </div>
         </div>
@@ -57,9 +95,9 @@
             <p class="listcount">6</p>
           </div>
           <div class="itembox">
-            <label class="title">
-                <input checked type="checkbox">
-                 Item1
+            <label class="itemtitle">
+              <input checked type="checkbox" />
+              Item1
             </label>
           </div>
         </div>
@@ -71,7 +109,6 @@
           Pakistan.
         </p>
       </div>
-
     </section>
 
     <script
