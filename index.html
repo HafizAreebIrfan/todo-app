@@ -1,17 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To Do App</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css">
-</head>
-<body>
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.1.1/css/all.css"
+    />
+  </head>
+  <body>
+    <section id="todolist">
 
+      <div class="header">
+        <div class="leftcol">
+          <h1 class="listtitle">Home</h1>
+          <p class="listdesc">Every day routine</p>
+          <input type="search" placeholder="Search" name="" id="search" />
+        </div>
+        <div class="rightcol">
+          <p class="timer"><i id="timericon" class="fas fa-stopwatch"></i>9 Days</p>
+          <p class="share"><i class="fas fa-share"></i></p>
+          <p class="edittitle">| Edit Title</p>
+        </div>
+      </div>
 
+      <div class="container">
+        <div class="todo">
+          <div class="top">
+            <h1>To Do</h1>
+            <p class="listcount">6</p>
+          </div>
+          <div class="itembox">
+            <label class="title">
+                <input type="checkbox">
+                 Item1
+            </label>
+          </div>
+        </div>
+        <div class="inprogress">
+          <div class="top">
+            <h1>In Progress</h1>
+            <p class="listcount">6</p>
+          </div>
+          <div class="itembox">
+            <label class="title">
+                <input type="checkbox">
+                 Item1
+            </label>
+          </div>
+        </div>
+        <div class="done">
+          <div class="top">
+            <h1>Done</h1>
+            <p class="listcount">6</p>
+          </div>
+          <div class="itembox">
+            <label class="title">
+                <input checked type="checkbox">
+                 Item1
+            </label>
+          </div>
+        </div>
+      </div>
 
-    <script defer src="https://use.fontawesome.com/releases/v5.1.1/js/all.js"></script>
+      <div class="footer">
+        <p>
+          Copyright 2024. Designed And Developed By HAPRODUCTION. Made In
+          Pakistan.
+        </p>
+      </div>
+
+    </section>
+
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.1.1/js/all.js"
+    ></script>
     <script src="./script.js"></script>
-</body>
+  </body>
 </html>

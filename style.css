@@ -1,8 +1,171 @@
-*{
-    margin: 0;
-    padding: 0;
-    text-decoration: none;
-    list-style: none;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+#todolist {
+  padding: 2rem;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.header .leftcol,
+.header .rightcol {
+  flex-basis: 50%;
+}
+.header .leftcol h1 {
+  font-size: 32px;
+  font-weight: 700;
+  font-family: "Poppins", sans-serif;
+  color: #454545;
+}
+.header .leftcol p {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+  color: #454545;
+}
+.header .leftcol input {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+  color: #454545;
+  border-radius: 10px;
+  padding: 10px 15px 10px 15px;
+  border: 1px solid #d7d7d7d7;
+  outline: none;
+  margin-block: 10px;
+}
+.header .leftcol input:focus {
+  outline: none;
+}
+.header .rightcol {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 15px;
+  text-align: right;
+}
+.header .rightcol .timer,
+.header .rightcol .share,
+.header .rightcol .edittitle {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+  color: #454545;
+}
+.header .rightcol #timericon {
+  margin-right: 10px;
+  font-size: 16px;
+  color: #454545;
+}
+.container {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.container .todo,
+.container .inprogress,
+.container .done {
+  flex-basis: 32%;
+  border: 1px solid #f0f3ff;
+  border-radius: 15px;
+  background-color: #f0f3ff;
+  padding: 10px;
+}
+.container .todo .top,
+.container .inprogress .top,
+.container .done .top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-radius: 15px;
+}
+.container .todo .top h1,
+.container .inprogress .top h1,
+.container .done .top h1 {
+  font-size: 18px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+}
+.container .todo .top p,
+.container .inprogress .top p,
+.container .done .top p {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+}
+.container .todo .itembox,
+.container .inprogress .itembox,
+.container .done .itembox {
+  margin-block: 10px;
+  padding: 20px 20px 20px 10px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  cursor: pointer;
+  border-left: 4px solid #61ce70;
+}
+.container .todo .itembox p,
+.container .inprogress .itembox p,
+.container .done .itembox p {
+  font-size: 16px;
+  font-weight: 400;
+  color: #454545;
+  vertical-align: middle;
+}
+.container .todo .itembox input[type=checkbox],
+.container .inprogress .itembox input[type=checkbox],
+.container .done .itembox input[type=checkbox] {
+    appearance: none; 
+    -webkit-appearance: none; 
+    width: 20px;
+    height: 20px;
+    border: 1px solid #d7d7d7;
+    border-radius: 4px;
+    background-color: #ffffff;
+    cursor: pointer;
+    position: relative;
+    vertical-align: bottom;
+}
+input[type="checkbox"]:checked {
+    background-color: #61ce70;
+    border-color: #61ce70;
+}
+input[type="checkbox"]::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: background 0.3s ease;
+    width: 10px;
+    height: 10px;
+    background: #61ce70;
+    display: none;
+    border-radius: 2px;
+}
+input[type="checkbox"]:checked::after {
+    display: block;
+    transition: background 0.3s ease;
+}
+.footer {
+  text-align: center;
+  margin-top: 20px;
+}
+.footer p {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+  color: #454545;
 }
