@@ -15,15 +15,57 @@
       <div class="userhistory"></div>
       <div id="taskinfomodal" class="taskinfo">
         <div class="modal-content">
-          <span class="modalclose">&times;</span>
-          <p>Some text in the Modal..</p>
+          <div class="modalheader">
+            <span class="modalclose">&times;</span>
+            <h1 class="taskinfotitle">Task Name</h1>
+          </div>
+          <div class="modalmain">
+            <div class="modalinputs">
+              <div class="info1">
+                <p>Description</p>
+                <input
+                  id="modaldesc"
+                  type="text"
+                  placeholder="Enter description"
+                />
+              </div>
+              <div class="info2">
+                <p>Task Duration</p>
+                <input
+                  type="datetime-local"
+                  id="modaldatetime"
+                  placeholder="Duration of Task"
+                />
+              </div>
+            </div>
+            <div class="todo">
+              <div class="top">
+                <div class="todotitle">
+                  <h1>To Do</h1>
+                </div>
+                <div class="todoactions">
+                  <p class="listcount">0 | </p>
+                  <i class="fas fa-plus todoicon"></i>
+                </div>
+              </div>
+              <div class="itembox">
+                <label class="itemtitle">
+                  Item1
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="modalfooter">
+            <button class="savetask">Save</button>
+          </div>
         </div>
       </div>
-      
+
       <div class="landingtitle">
         <h1>Create your first Task</h1>
-        <input type="text" id="" placeholder="Enter your Task Name" />
+        <input type="text" id="taskname" placeholder="Enter your Task Name" />
         <button class="createtask"><i class="fas fa-plus"></i></button>
+        <p class="error"></p>
       </div>
       <div class="historyrow hide">
         <h1>Your Tasks</h1>

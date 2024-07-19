@@ -32,25 +32,153 @@ body {
   background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 0.4);
 }
+.taskinfotitle{
+    font-size: 28px;
+    font-weight: 700;
+    font-family: "Poppins", sans-serif;
+}
 .modal-content {
-  background-color: #ffffff;
+  background-color: #f0f3ff;
   border-radius: 15px;
   margin: auto;
-  padding: 20px;
   border: 1px solid #d7d7d7;
   width: 80%;
 }
-
+.modalheader {
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 15px;
+}
+.modalmain {
+  margin: 20px 10px 20px 10px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.modalinputs{
+    flex-basis: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+.modalmain .modalinputs .info1,
+.modalmain .modalinputs .info2{
+    flex-basis: 50%;
+}
+.modalmain .modalinputs p {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+}
+.modalmain .modalinputs input {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #d7d7d7d7;
+  margin-block: 10px;
+  outline: none;
+  transition: 0.3s ease;
+  font-size: 16px;
+  width: 95%;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  background-color: #ffffff;
+}
+.modalmain .modalinputs input:focus{
+    border: 1px solid #61ce70;
+}
+.modalmain .todo {
+  flex-basis: 50%;
+  border: 1px solid #f0f3ff;
+  border-radius: 15px;
+  background-color: #f0f3ff;
+  padding: 10px;
+  margin-top: 20px;
+}
+.modalmain .todo .top {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 15px;
+}
+.modalmain .todo .top .todotitle,
+.modalmain .todo .top .todoactions{
+    flex-basis: 50%;
+}
+.modalmain .todo .top h1 {
+  font-size: 18px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+}
+.modalmain .todo .top .todoactions{
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+.modalmain .todo .top p {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+}
+.modalmain .todo .top .todoicon{
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: "Poppins", sans-serif;
+}
+.modalmain .todo .itembox {
+  margin-block: 10px;
+  padding: 20px 20px 20px 10px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  cursor: pointer;
+  border-left: 4px solid #61ce70;
+}
+.modalmain .todo .itembox label {
+  font-size: 16px;
+  font-weight: 400;
+  color: #454545;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.modalfooter{
+    background-color: #ffffff;
+    border-radius: 25px;
+    padding: 1rem;
+    text-align: right;
+}
+.modalfooter button{
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #61ce70;
+    border: 1px solid #61ce70;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'Poppins',sans-serif;
+    outline: none;
+    cursor: pointer;
+    color: #ffffff;
+    transition: 0.3s ease;
+}
+.modalfooter button:hover{
+    background-color: #ffffff;
+    border: 1px solid #61ce70;
+    color: #454545;
+}
 .modalclose {
-  color: #aaaaaa;
+  color: #454545;
   float: right;
-  font-size: 22px;
+  font-size: 24px;
   font-weight: bold;
 }
-
 .modalclose:hover,
 .modalclose:focus {
-  color: #000;
+  color: #61ce70;
   text-decoration: none;
   cursor: pointer;
 }
