@@ -36,22 +36,23 @@
                   id="modaldatetime"
                   placeholder="Duration of Task"
                 />
+                <div class="info2sub">
+                <p><input type="checkbox" id="everyday">Check, if this will be every day task</p>
+                
+              </div>
               </div>
             </div>
-            <div class="todo">
-              <div class="top">
-                <div class="todotitle">
+            <div class="modaltodo">
+              <div class="modaltodotop">
+                <div class="modaltodotitle">
                   <h1>To Do</h1>
                 </div>
-                <div class="todoactions">
-                  <p class="listcount">0 | </p>
-                  <i class="fas fa-plus todoicon"></i>
+                <div class="modaltodoactions">
+                  <p class="modallistcount">0 |</p>
+                  <button class="modaltodoicon"><i class="fas fa-plus"></i></button>
                 </div>
               </div>
-              <div class="itembox">
-                <label class="itemtitle">
-                  Item1
-                </label>
+              <div class="modalitemboxcontainer">
               </div>
             </div>
           </div>
@@ -93,14 +94,13 @@
     <section id="todolist" class="list hide">
       <div class="header">
         <div class="leftcol">
-          <h1 class="listtitle">Home</h1>
-          <p class="listdesc">Every day routine</p>
+          <h1 class="listtitle"></h1>
+          <p class="listdesc"></p>
           <input type="search" placeholder="Search" name="" id="searchlist" />
         </div>
         <div class="rightcol">
-          <p class="timer">
-            <i id="timericon" class="fas fa-stopwatch"></i>9 Days
-          </p>
+          <i id="timericon" class="fas fa-stopwatch"></i>
+          <p class="timer"></p>
           <p class="share"><i class="fas fa-share"></i></p>
           <p class="edittitle">| Edit Title</p>
         </div>
@@ -109,38 +109,31 @@
       <div class="container">
         <div class="todo">
           <div class="top">
-            <h1>To Do</h1>
-            <p class="listcount">6</p>
+            <div class="todotitle">
+              <h1>To Do</h1>
+            </div>
+            <div class="todoactions">
+              <p class="listcount">0 |</p>
+              <button class="todoicon"><i class="fas fa-plus"></i></button>
+            </div>
           </div>
-          <div class="itembox">
-            <label class="itemtitle">
-              <input type="checkbox" />
-              Item1
-            </label>
+          <div class="listitemboxcontainer">
           </div>
         </div>
         <div class="inprogress">
           <div class="top">
             <h1>In Progress</h1>
-            <p class="listcount">6</p>
+            <p class="listcountprog"></p>
           </div>
-          <div class="itembox">
-            <label class="itemtitle">
-              <input type="checkbox" />
-              Item1
-            </label>
+          <div class="progitemboxcontainer">
           </div>
         </div>
         <div class="done">
           <div class="top">
             <h1>Done</h1>
-            <p class="listcount">6</p>
+            <p class="listcountdone"></p>
           </div>
-          <div class="itembox">
-            <label class="itemtitle">
-              <input checked type="checkbox" />
-              Item1
-            </label>
+          <div class="doneitemboxcontainer">
           </div>
         </div>
       </div>

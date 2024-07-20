@@ -6,9 +6,10 @@
   list-style: none;
   box-sizing: border-box;
   scroll-behavior: smooth;
+  font-family: "Poppins", sans-serif;
 }
 body {
-  background-color: #f0f3ff;
+  background-color: #f8f8f8;
   position: relative;
 }
 .userhistory {
@@ -32,10 +33,10 @@ body {
   background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 0.4);
 }
-.taskinfotitle{
-    font-size: 28px;
-    font-weight: 700;
-    font-family: "Poppins", sans-serif;
+.taskinfotitle {
+  font-size: 28px;
+  font-weight: 700;
+  font-family: "Poppins", sans-serif;
 }
 .modal-content {
   background-color: #f0f3ff;
@@ -59,16 +60,16 @@ body {
   align-items: center;
   flex-wrap: wrap;
 }
-.modalinputs{
-    flex-basis: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
+.modalinputs {
+  flex-basis: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
 }
 .modalmain .modalinputs .info1,
-.modalmain .modalinputs .info2{
-    flex-basis: 50%;
+.modalmain .modalinputs .info2 {
+  flex-basis: 50%;
 }
 .modalmain .modalinputs p {
   font-size: 16px;
@@ -88,10 +89,19 @@ body {
   font-weight: 400;
   background-color: #ffffff;
 }
-.modalmain .modalinputs input:focus{
-    border: 1px solid #61ce70;
+.modalmain .modalinputs input:focus {
+  border: 1px solid #61ce70;
 }
-.modalmain .todo {
+
+.modalmain .modalinputs .info2sub p {
+  font-size: 14px;
+  font-weight: 400;
+  color: #454545;
+}
+.modalmain .modalinputs .info2sub input {
+  width: 5%;
+}
+.modalmain .modaltodo {
   flex-basis: 50%;
   border: 1px solid #f0f3ff;
   border-radius: 15px;
@@ -99,76 +109,105 @@ body {
   padding: 10px;
   margin-top: 20px;
 }
-.modalmain .todo .top {
+.modalmain .modaltodo .modaltodotop {
   display: flex;
   justify-content: space-between;
   border-radius: 15px;
 }
-.modalmain .todo .top .todotitle,
-.modalmain .todo .top .todoactions{
-    flex-basis: 50%;
+.modalmain .modaltodo .modaltodotop .todotitle,
+.modalmain .modaltodo .modaltodotop .todoactions {
+  flex-basis: 50%;
 }
-.modalmain .todo .top h1 {
+.modalmain .modaltodo .modaltodotop h1 {
   font-size: 18px;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
 }
-.modalmain .todo .top .todoactions{
-    text-align: right;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 10px;
+.modalmain .modaltodo .modaltodotop .modaltodoactions {
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
 }
-.modalmain .todo .top p {
+.modalmain .modaltodo .modaltodotop p {
   font-size: 16px;
   font-weight: 400;
   font-family: "Poppins", sans-serif;
 }
-.modalmain .todo .top .todoicon{
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 400;
-    font-family: "Poppins", sans-serif;
+.modalmain .modaltodo .modaltodotop .modaltodoicon {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+  border: none;
 }
-.modalmain .todo .itembox {
+.modalmain .modaltodo .itembox {
   margin-block: 10px;
   padding: 20px 20px 20px 10px;
   background-color: #ffffff;
   border-radius: 15px;
-  cursor: pointer;
   border-left: 4px solid #61ce70;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
 }
-.modalmain .todo .itembox label {
+.modalmain .modaltodo .itembox input {
   font-size: 16px;
   font-weight: 400;
   color: #454545;
   vertical-align: middle;
+  border: none;
+  border-bottom: 1px solid #d7d7d7;
+  cursor: text;
+  position: relative;
+  width: 85% !important;
+  outline: none;
+  transition: 0.3s ease;
+}
+.modalmain .modaltodo .itembox input:focus {
+  border-bottom: 1px solid #61ce70;
+  outline: none;
+}
+.modalmain .modaltodo .itembox .modaldeletebtn {
+  font-size: 16px;
+  font-weight: 400;
+  color: #454545;
+  border: none;
+  background: transparent;
+  outline: none;
   cursor: pointer;
 }
-.modalfooter{
-    background-color: #ffffff;
-    border-radius: 25px;
-    padding: 1rem;
-    text-align: right;
+.modalmain .modaltodo .itembox .modaldeleteicon {
+  font-size: 16px;
+  font-weight: 400;
+  color: #c00000;
+  cursor: pointer;
 }
-.modalfooter button{
-    padding: 10px;
-    border-radius: 10px;
-    background-color: #61ce70;
-    border: 1px solid #61ce70;
-    font-size: 16px;
-    font-weight: 400;
-    font-family: 'Poppins',sans-serif;
-    outline: none;
-    cursor: pointer;
-    color: #ffffff;
-    transition: 0.3s ease;
+.modalfooter {
+  background-color: #ffffff;
+  border-radius: 25px;
+  padding: 1rem;
+  text-align: right;
 }
-.modalfooter button:hover{
-    background-color: #ffffff;
-    border: 1px solid #61ce70;
-    color: #454545;
+.modalfooter button {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #61ce70;
+  border: 1px solid #61ce70;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+  outline: none;
+  cursor: pointer;
+  color: #ffffff;
+  transition: 0.3s ease;
+}
+.modalfooter button:hover {
+  background-color: #ffffff;
+  border: 1px solid #61ce70;
+  color: #454545;
 }
 .modalclose {
   color: #454545;
@@ -308,7 +347,7 @@ body {
 }
 .header .rightcol {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: flex-end;
   gap: 15px;
   text-align: right;
@@ -325,14 +364,12 @@ body {
   cursor: pointer;
 }
 .header .rightcol #timericon {
-  margin-right: 10px;
   font-size: 16px;
   color: #454545;
 }
 .container {
   margin-top: 30px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
   text-align: left;
   flex-wrap: wrap;
@@ -355,6 +392,10 @@ body {
   align-items: flex-start;
   border-radius: 15px;
 }
+.container .todo .top .todotitle,
+.container .todo .top .todoactions {
+  flex-basis: 50%;
+}
 .container .todo .top h1,
 .container .inprogress .top h1,
 .container .done .top h1 {
@@ -369,6 +410,20 @@ body {
   font-weight: 400;
   font-family: "Poppins", sans-serif;
 }
+.container .todo .top .todoactions {
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+.container .todo .top .todoicon {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+  border: none;
+}
 .container .todo .itembox,
 .container .inprogress .itembox,
 .container .done .itembox {
@@ -378,6 +433,10 @@ body {
   border-radius: 15px;
   cursor: pointer;
   border-left: 4px solid #61ce70;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
 }
 .container .todo .itembox p,
 .container .inprogress .itembox p,
@@ -401,11 +460,15 @@ body {
   position: relative;
   vertical-align: bottom;
 }
-input[type="checkbox"]:checked {
+.container .todo .itembox input[type="checkbox"]:checked,
+.container .inprogress .itembox input[type="checkbox"]:checked,
+.container .done .itembox input[type="checkbox"]:checked {
   background-color: #61ce70;
   border-color: #61ce70;
 }
-input[type="checkbox"]::after {
+.container .todo .itembox input[type="checkbox"]::after,
+.container .inprogress .itembox input[type="checkbox"]::after,
+.container .done .itembox input[type="checkbox"]::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -421,6 +484,37 @@ input[type="checkbox"]::after {
 input[type="checkbox"]:checked::after {
   display: block;
   transition: background 0.3s ease;
+}
+.container .todo .itembox input {
+  font-size: 16px;
+  font-weight: 400;
+  color: #454545;
+  vertical-align: middle;
+  border: none;
+  border-bottom: 1px solid #d7d7d7;
+  cursor: text;
+  position: relative;
+  width: 85% !important;
+  outline: none;
+  transition: 0.3s ease;
+}
+.container .todo .itembox input:focus {
+  border-bottom: 1px solid #61ce70;
+  outline: none;
+}
+.container .todo .itembox .tododeletebtn {
+  font-size: 16px;
+  font-weight: 400;
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.container .todo .itembox .tododeleteicon {
+  font-size: 16px;
+  font-weight: 400;
+  color: #c00000;
+  cursor: pointer;
 }
 .footer {
   text-align: center;
