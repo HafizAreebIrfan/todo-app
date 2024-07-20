@@ -11,9 +11,11 @@ const timer = document.querySelector(".timer");
 const share = document.querySelector(".share");
 const edittitle = document.querySelector(".edittitle");
 const listcount = document.querySelector(".listcount");
+const listcountprog = document.querySelector(".listcountprog");
+const listcountdone = document.querySelector(".listcountdone");
 const modallistcount = document.querySelector(".modallistcount");
 const modalitemboxcontainer = document.querySelector(".modalitemboxcontainer");
-const itemboxcontainer = document.querySelector(".listitemboxcontainer");
+const todoitemboxcontainer = document.querySelector(".listitemboxcontainer");
 const progitemboxcontainer = document.querySelector(".progitemboxcontainer");
 const doneitemboxcontainer = document.querySelector(".doneitemboxcontainer");
 let itembox;
@@ -25,6 +27,8 @@ const taskinfotitle = document.querySelector(".taskinfotitle");
 const modaldesc = document.querySelector("#modaldesc");
 const modaldatetime = document.querySelector("#modaldatetime");
 const modaltodoicon = document.querySelector(".modaltodoicon");
+let modaldeletebtn;
+let modaldeleteicon;
 const todoicon = document.querySelector(".todoicon");
 const savetask = document.querySelector(".savetask");
 const everyday = document.querySelector("#everyday");
@@ -72,18 +76,31 @@ const modalfunctionality = (taskinfoheading) => {
     modallistcount.innerText = itemCount;
     itembox = document.createElement("div");
     itembox.classList.add("itembox");
+    itembox.setAttribute("data-id", itemCount);
     itemtitle = document.createElement("input");
     itemtitle.classList.add("itemtitle");
     itemtitle.setAttribute("contenteditable", "true");
     itemtitle.setAttribute("type", "text");
     itemtitle.setAttribute("placeholder", "click to edit...");
-    const modaldeletebtn = document.createElement("button");
+    modaldeletebtn = document.createElement("button");
     modaldeletebtn.classList.add("modaldeletebtn");
-    const modaldeleteicon = document.createElement("i");
+    modaldeletebtn.style.cursor = "pointer";
+    modaldeleteicon = document.createElement("i");
     modaldeleteicon.classList.add("fas", "fa-trash", "modaldeleteicon");
+    modaldeletebtn.style.border = "none";
+    modaldeleteicon.style.color = "#c00000";
     itembox.appendChild(itemtitle);
     modaldeletebtn.appendChild(modaldeleteicon);
     itembox.appendChild(modaldeletebtn);
+    let movebtn = document.createElement("button");
+    movebtn.classList.add("todomovebtn");
+    let moveicon = document.createElement("i");
+    moveicon.classList.add("fas", "fa-chevron-circle-right", "todomoveicon");
+    movebtn.appendChild(moveicon);
+    itembox.appendChild(movebtn);
+    movebtn.style.display = "none";
+    movebtn.style.marginLeft = "5px";
+    moveicon.style.display = "none";
     modalitemboxcontainer.appendChild(itembox);
     itemtitle.addEventListener("focus", () => {
       itemtitle.style.borderBottom = "1px solid #61ce70";
@@ -97,10 +114,13 @@ const modalfunctionality = (taskinfoheading) => {
       itemCount--;
       modallistcount.innerText = itemCount;
     });
+    movebtn.addEventListener("click", () => {
+      console.log("Move button clicked");
+    });
   });
-  savetaskfunc(taskinfoheading);
+  savetaskfunc(taskinfoheading, modalitemboxcontainer);
 };
-const savetaskfunc = (taskinfoheading) => {
+const savetaskfunc = (taskinfoheading, modalitemboxcontainer) => {
   savetask.addEventListener("click", () => {
     let modaldescription = modaldesc.value;
     let everydayvalue = everyday.checked;
@@ -113,7 +133,6 @@ const savetaskfunc = (taskinfoheading) => {
     } else {
       taskinfomodal.style.display = "none";
       const allitemtitle = document.querySelectorAll(".itemtitle");
-
       allitemtitle.forEach((item) => {
         let itemtitlevalue = item.value.trim();
         if (everydayvalue) {
@@ -124,6 +143,7 @@ const savetaskfunc = (taskinfoheading) => {
             itemtitlevalue,
             taskinfoheading,
             modaldescription,
+            modalitemboxcontainer,
           );
         } else {
           listfunction(
@@ -133,7 +153,7 @@ const savetaskfunc = (taskinfoheading) => {
             itemtitlevalue,
             taskinfoheading,
             modaldescription,
-            modaldate,
+            modalitemboxcontainer,
           );
         }
       });
@@ -159,57 +179,38 @@ const listfunction = (
   usertime,
   itemtitle,
   taskinfoheading,
-  modaldescription
+  modaldescription,
+  modalitemboxcontainer,
 ) => {
-  itembox = document.createElement("div");
-  itembox.classList.add("itembox");
-  const inputitemtitle = document.createElement("input");
-  inputitemtitle.classList.add("itemtitle");
-  inputitemtitle.setAttribute("type", "text");
-  inputitemtitle.value = itemtitle;
-  itembox.appendChild(inputitemtitle);
-  const tododeletebtn = document.createElement("button");
-  tododeletebtn.classList.add("tododeletebtn");
-  const tododeleteicon = document.createElement("i");
-  tododeleteicon.classList.add("fas", "fa-trash", "tododeleteicon");
-  tododeletebtn.appendChild(tododeleteicon);
-  itembox.appendChild(tododeletebtn);
-  itemboxcontainer.appendChild(itembox);
-  tododeletebtn.addEventListener("click", (e) => {
-    e.target.closest(".itembox").remove();
-    itemCount--;
-    listcount.innerText = `${itemCount} | `;
+   let itemcount = listcount.innerText = `${itemCount} | `;
+   console.log(itemcount)
+  const moveButtons = modalitemboxcontainer.querySelectorAll(".todomovebtn");
+  const moveIcons = modalitemboxcontainer.querySelectorAll(".todomoveicon");
+  const deleteButtons = modalitemboxcontainer.querySelectorAll(".modaldeletebtn");
+  moveButtons.forEach((btn) => {
+    btn.style.display = "block";
   });
-  todoicon.addEventListener("click", () => {
-    itemCount++;
-    listcount.innerText = `${itemCount} | `;
-    const newitembox = document.createElement("div");
-    newitembox.classList.add("itembox");
-    const newinputitemtitle = document.createElement("input");
-    newinputitemtitle.classList.add("itemtitle");
-    newinputitemtitle.setAttribute("type", "text");
-    newitembox.appendChild(newinputitemtitle);
-    const newtododeletebtn = document.createElement("button");
-    newtododeletebtn.classList.add("tododeletebtn");
-    const newtododeleteicon = document.createElement("i");
-    newtododeleteicon.classList.add("fas", "fa-trash", "tododeleteicon");
-    newtododeletebtn.appendChild(newtododeleteicon);
-    newitembox.appendChild(newtododeletebtn);
-    itemboxcontainer.appendChild(newitembox);
-    console.log(itemboxcontainer);
-    newtododeletebtn.addEventListener("click", (e) => {
-      e.target.closest(".itembox").remove();
-      itemCount--;
-      listcount.innerText = `${itemCount} | `;
+  moveIcons.forEach((icon) => {
+    icon.style.display = "block";
+  });
+  deleteButtons.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const itembox = e.target.closest(".itembox");
+      const itemId = itembox.getAttribute("data-id");
+      if (itemId) {
+        itembox.remove();
+        itemcount = itemCount--;
+        listcount.innerText = `${itemcount} | `;
+      }
     });
   });
 
+  todoitemboxcontainer.append(modalitemboxcontainer);
   landingsection.classList.add("hide");
   list.classList.remove("hide");
-  listcount.innerText = `${itemCount} | `;
   listtitle.innerText = taskinfoheading;
   listdesc.innerText = modaldescription;
-
+  
   let timerText;
   if (dateOrEveryday === true) {
     timerText = "Everyday";
@@ -241,30 +242,96 @@ const listfunction = (
       timer.innerText = taskbooktimer;
     }, 1000);
   }
-
-  if (
-    progitemboxcontainer.innerHTML.trim() === "" ||
-    doneitemboxcontainer.innerHTML.trim() === ""
-  ) {
-    const createNothingMessage = () => {
-      const nothing = document.createElement("p");
-      nothing.classList.add("nothingdata");
-      nothing.innerText = "No items available";
-      return nothing;
-    };
-    if (progitemboxcontainer.innerHTML.trim() === "") {
-      progitemboxcontainer.appendChild(createNothingMessage());
-    }
-    if (doneitemboxcontainer.innerHTML.trim() === "") {
-      doneitemboxcontainer.appendChild(createNothingMessage());
-    }
-  }
-  //add time if user selected date and time
-  //add button in todo to move it to in progress or to done
-  //if user select in progress ask for duration then add timer of that duration. when timer adds move that item to done
-  //store this notesbook in history and localstorage and display on landing page, the data of each user
-  //make site responsive
-  //test
-  //deploy
-  //done
 };
+
+const additemintodo = () => {
+  todoicon.addEventListener("click", () => {
+    itemCount++;
+    listcount.innerText = `${itemCount} | `;
+    let newitembox = document.createElement("div");
+    newitembox.classList.add("itembox");
+    const newinputitemtitle = document.createElement("input");
+    newinputitemtitle.classList.add("itemtitle");
+    newinputitemtitle.setAttribute("type", "text");
+    newinputitemtitle.setAttribute("placeholder", "click to edit...");
+    newitembox.appendChild(newinputitemtitle);
+    const newtododeletebtn = document.createElement("button");
+    newtododeletebtn.classList.add("tododeletebtn");
+    const newtododeleteicon = document.createElement("i");
+    newtododeleteicon.classList.add("fas", "fa-trash", "tododeleteicon");
+    newtododeletebtn.appendChild(newtododeleteicon);
+    newitembox.appendChild(newtododeletebtn);
+    const newtodomovebtn = document.createElement("button");
+    newtodomovebtn.classList.add("todomovebtn");
+    const newtodomoveicon = document.createElement("i");
+    newtodomoveicon.classList.add(
+      "fas",
+      "fa-chevron-circle-right",
+      "todomoveicon"
+    );
+    newtodomovebtn.appendChild(newtodomoveicon);
+    newitembox.appendChild(newtodomovebtn);
+    todoitemboxcontainer.appendChild(newitembox);
+    console.log(todoitemboxcontainer);
+    newtododeletebtn.addEventListener("click", (e) => {
+      e.target.closest(".itembox").remove();
+      itemCount--;
+      listcount.innerText = `${itemCount} | `;
+    });
+    newtodomovebtn.addEventListener("click", () => {
+      console.log("Move button clicked");
+    });
+  });
+};
+
+additemintodo();
+if (
+  progitemboxcontainer.innerHTML.trim() === "" ||
+  doneitemboxcontainer.innerHTML.trim() === ""
+) {
+  const createNothingMessage = () => {
+    const nothing = document.createElement("p");
+    nothing.classList.add("nothingdata");
+    nothing.innerText = "No items available";
+    return nothing;
+  };
+  if (progitemboxcontainer.innerHTML.trim() === "") {
+    progitemboxcontainer.appendChild(createNothingMessage());
+  }
+  if (doneitemboxcontainer.innerHTML.trim() === "") {
+    doneitemboxcontainer.appendChild(createNothingMessage());
+  }
+}
+// const movetoinprogress = (itemCount, itemtitle) => {
+//   console.log("Function called");
+// listcountprog.innerText = itemCount;
+// itembox = document.createElement("div");
+// itembox.classList.add("itembox");
+// const inputitemtitle = document.createElement("input");
+// inputitemtitle.classList.add("itemtitle");
+// inputitemtitle.setAttribute("type", "text");
+// inputitemtitle.value = itemtitle;
+// itembox.appendChild(inputitemtitle);
+// const progdonebtn = document.createElement("button");
+// progdonebtn.classList.add("progdonebtn");
+// const progdoneicon = document.createElement("i");
+// progdoneicon.classList.add(
+//   "fas",
+//   "fa-chevron-circle-right",
+//   "progdoneicon"
+// );
+// progdonebtn.appendChild(progdoneicon);
+// itembox.appendChild(progdonebtn);
+// progitemboxcontainer.appendChild(itembox);
+// };
+
+//add time if user selected date and time -- Done
+//add button in todo to move it to in progress or to done --- Done
+//if user select in progress ask for duration then add timer of that duration.
+//when timer adds move that item to done
+//store this notesbook in history and localstorage and display on landing page,
+// the data of each user
+//make site responsive
+//test
+//deploy
+//done

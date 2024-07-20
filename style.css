@@ -9,7 +9,7 @@
   font-family: "Poppins", sans-serif;
 }
 body {
-  background-color: #f8f8f8;
+  background-color: #f5f2f2;
   position: relative;
 }
 .userhistory {
@@ -162,7 +162,7 @@ body {
   border-bottom: 1px solid #d7d7d7;
   cursor: text;
   position: relative;
-  width: 85% !important;
+  width: 90% !important;
   outline: none;
   transition: 0.3s ease;
 }
@@ -173,17 +173,31 @@ body {
 .modalmain .modaltodo .itembox .modaldeletebtn {
   font-size: 16px;
   font-weight: 400;
-  color: #454545;
-  border: none;
-  background: transparent;
+  border: none !important;
+  background: transparent !important;
   outline: none;
-  cursor: pointer;
+  cursor: pointer !important;
 }
 .modalmain .modaltodo .itembox .modaldeleteicon {
   font-size: 16px;
   font-weight: 400;
-  color: #c00000;
-  cursor: pointer;
+  color: #c00000 !important;
+  cursor: pointer !important;
+}
+.modalmain .modaltodo .itembox .movebtn {
+  font-size: 16px;
+  font-weight: 400;
+  background: transparent;
+  border: none !important;
+  outline: none;
+  cursor: pointer !important;
+  margin-right: 5px;
+}
+.modalmain .modaltodo .itembox .moveicon {
+  font-size: 16px;
+  font-weight: 400;
+  color: #61ce70 !important;
+  cursor: pointer !important;
 }
 .modalfooter {
   background-color: #ffffff;
@@ -438,6 +452,18 @@ body {
   align-items: center;
   justify-content: space-between;
 }
+.container .todo .todoitembox {
+  margin-block: 10px;
+  padding: 20px 20px 20px 10px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  cursor: pointer;
+  border-left: 4px solid #61ce70;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
 .container .todo .itembox p,
 .container .inprogress .itembox p,
 .container .done .itembox p {
@@ -494,7 +520,7 @@ input[type="checkbox"]:checked::after {
   border-bottom: 1px solid #d7d7d7;
   cursor: text;
   position: relative;
-  width: 85% !important;
+  width: 80% !important;
   outline: none;
   transition: 0.3s ease;
 }
@@ -514,6 +540,21 @@ input[type="checkbox"]:checked::after {
   font-size: 16px;
   font-weight: 400;
   color: #c00000;
+  cursor: pointer;
+}
+.container .todo .itembox .todomovebtn {
+  font-size: 16px;
+  font-weight: 400;
+  background: transparent;
+  border: none !important;
+  outline: none;
+  cursor: pointer;
+  margin-right: 5px;
+}
+.container .todo .itembox .todomoveicon {
+  font-size: 16px;
+  font-weight: 400;
+  color: #61ce70 !important;
   cursor: pointer;
 }
 .footer {
