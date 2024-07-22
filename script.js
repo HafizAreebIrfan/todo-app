@@ -32,6 +32,7 @@ let modaldeleteicon;
 const todoicon = document.querySelector(".todoicon");
 const savetask = document.querySelector(".savetask");
 const everyday = document.querySelector("#everyday");
+const everydayboxtext = document.querySelector(".everydayboxtext");
 const landingsection = document.querySelector("#landing");
 let itemCount = 0;
 
@@ -102,117 +103,114 @@ const modalfunctionality = (taskinfoheading) => {
     movebtn.style.marginLeft = "5px";
     moveicon.style.display = "none";
     modalitemboxcontainer.appendChild(itembox);
+
     itemtitle.addEventListener("focus", () => {
       itemtitle.style.borderBottom = "1px solid #61ce70";
     });
+
     itemtitle.addEventListener("blur", () => {
       itemtitle.style.borderBottom = "1px solid #d7d7d7";
     });
+
     itemtitle.focus();
     modaldeletebtn.addEventListener("click", (e) => {
       e.target.closest(".itembox").remove();
       itemCount--;
       modallistcount.innerText = itemCount;
     });
-    movebtn.addEventListener("click", () => {
-      console.log("Move button clicked");
-    });
+
+    movebtn.addEventListener("click", () => {});
   });
-  savetaskfunc(taskinfoheading, modalitemboxcontainer);
+  savetaskfunc(taskinfoheading);
 };
-const savetaskfunc = (taskinfoheading, modalitemboxcontainer) => {
+
+modaldesc.addEventListener("focus", () => {
+  modaldesc.style.border = "1px solid #61ce70";
+});
+
+modaldesc.addEventListener("blur", () => {
+  modaldesc.style.border = "1px solid #d7d7d7";
+});
+
+modaldatetime.addEventListener("focus", () => {
+  modaldatetime.style.border = "1px solid #61ce70";
+});
+
+modaldatetime.addEventListener("blur", () => {
+  modaldatetime.style.border = "1px solid #d7d7d7";
+});
+everyday.addEventListener("blur", () => {
+  everydayboxtext.style.color = "#454545";
+});
+
+const eachitemvalue = () => {
+  let itemValues = [];
+  let itemBoxes = document.querySelectorAll(".itembox");
+  itemBoxes.forEach((box, index) => {
+    let inputValue = box.querySelector(".itemtitle").value;
+    itemValues.push(inputValue);
+  });
+  return itemValues;
+};
+
+let systimeonsave;
+const savetaskfunc = (taskinfoheading) => {
   savetask.addEventListener("click", () => {
     let modaldescription = modaldesc.value;
     let everydayvalue = everyday.checked;
     let modaldate = modaldatetime.value;
     let usertime = new Date(modaldate).getTime();
-
-    if (modaldesc.value === "" || itemtitle.value === "") {
+    systimeonsave = new Date().toLocaleTimeString();
+    if (
+      modaldesc.value === "" ||
+      itemtitle.value === "" ||
+      modaldatetime === "" ||
+      everyday === ""
+    ) {
       modaldesc.style.border = "1px solid red";
+      modaldatetime.style.border = "1px solid red";
+      everydayboxtext.style.color = "red";
       itemtitle.style.borderBottom = "1px solid red";
     } else {
+      let itemvalue = eachitemvalue();
       taskinfomodal.style.display = "none";
-      const allitemtitle = document.querySelectorAll(".itemtitle");
-      allitemtitle.forEach((item) => {
-        let itemtitlevalue = item.value.trim();
-        if (everydayvalue) {
-          listfunction(
-            true,
-            itemCount,
-            usertime,
-            itemtitlevalue,
-            taskinfoheading,
-            modaldescription,
-            modalitemboxcontainer,
-          );
-        } else {
-          listfunction(
-            false,
-            itemCount,
-            usertime,
-            itemtitlevalue,
-            taskinfoheading,
-            modaldescription,
-            modalitemboxcontainer,
-          );
-        }
-      });
+      if (everydayvalue) {
+        moveintodo(
+          true,
+          itemCount,
+          usertime,
+          taskinfoheading,
+          modaldescription,
+          itemvalue
+        );
+      } else {
+        moveintodo(
+          false,
+          itemCount,
+          usertime,
+          taskinfoheading,
+          modaldescription,
+          itemvalue
+        );
+      }
     }
   });
 };
-modaldesc.addEventListener("focus", () => {
-  modaldesc.style.border = "1px solid #61ce70";
-});
-modaldesc.addEventListener("blur", () => {
-  modaldesc.style.border = "1px solid #d7d7d7";
-});
-modaldatetime.addEventListener("focus", () => {
-  modaldatetime.style.border = "1px solid #61ce70";
-});
-modaldatetime.addEventListener("blur", () => {
-  modaldatetime.style.border = "1px solid #d7d7d7";
-});
-
-const listfunction = (
+const moveintodo = (
   dateOrEveryday,
   itemCount,
   usertime,
-  itemtitle,
   taskinfoheading,
   modaldescription,
-  modalitemboxcontainer,
+  itemvalue
 ) => {
-   let itemcount = listcount.innerText = `${itemCount} | `;
-   console.log(itemcount)
-  const moveButtons = modalitemboxcontainer.querySelectorAll(".todomovebtn");
-  const moveIcons = modalitemboxcontainer.querySelectorAll(".todomoveicon");
-  const deleteButtons = modalitemboxcontainer.querySelectorAll(".modaldeletebtn");
-  moveButtons.forEach((btn) => {
-    btn.style.display = "block";
-  });
-  moveIcons.forEach((icon) => {
-    icon.style.display = "block";
-  });
-  deleteButtons.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      const itembox = e.target.closest(".itembox");
-      const itemId = itembox.getAttribute("data-id");
-      if (itemId) {
-        itembox.remove();
-        itemcount = itemCount--;
-        listcount.innerText = `${itemcount} | `;
-      }
-    });
-  });
-
-  todoitemboxcontainer.append(modalitemboxcontainer);
   landingsection.classList.add("hide");
   list.classList.remove("hide");
   listtitle.innerText = taskinfoheading;
   listdesc.innerText = modaldescription;
-  
-  let timerText;
+
   if (dateOrEveryday === true) {
+    let timerText;
     timerText = "Everyday";
     timer.innerText = timerText;
   } else {
@@ -242,93 +240,213 @@ const listfunction = (
       timer.innerText = taskbooktimer;
     }, 1000);
   }
-};
 
-const additemintodo = () => {
-  todoicon.addEventListener("click", () => {
-    itemCount++;
+  const additemintodo = () => {
+    todoicon.addEventListener("click", () => {
+      itemCount++;
+      listcount.innerText = `${itemCount} | `;
+      let newitembox = document.createElement("div");
+      newitembox.classList.add("itembox");
+      const newinputitemtitle = document.createElement("input");
+      newinputitemtitle.classList.add("itemtitle");
+      newinputitemtitle.setAttribute("type", "text");
+      newinputitemtitle.setAttribute("placeholder", "click to edit...");
+      newitembox.appendChild(newinputitemtitle);
+      const newtododeletebtn = document.createElement("button");
+      newtododeletebtn.classList.add("tododeletebtn");
+      const newtododeleteicon = document.createElement("i");
+      newtododeleteicon.classList.add("fas", "fa-trash", "tododeleteicon");
+      newtododeletebtn.appendChild(newtododeleteicon);
+      newitembox.appendChild(newtododeletebtn);
+      const newtodomovebtn = document.createElement("button");
+      newtodomovebtn.classList.add("todomovebtn");
+      const newtodomoveicon = document.createElement("i");
+      newtodomoveicon.classList.add(
+        "fas",
+        "fa-chevron-circle-right",
+        "todomoveicon"
+      );
+      newtodomovebtn.appendChild(newtodomoveicon);
+      newitembox.appendChild(newtodomovebtn);
+      todoitemboxcontainer.appendChild(newitembox);
+      newtododeletebtn.addEventListener("click", (e) => {
+        e.target.closest(".itembox").remove();
+        itemCount--;
+        listcount.innerText = `${itemCount} | `;
+      });
+      newtodomovebtn.addEventListener("click", () => {
+        newitembox.style.display = "none";
+        itemCount--;
+        listcount.innerText = `${itemCount} | `;
+        movetoinprogress(newinputitemtitle.value);
+      });
+    });
+  };
+
+  itemvalue.forEach((value, index) => {
     listcount.innerText = `${itemCount} | `;
-    let newitembox = document.createElement("div");
-    newitembox.classList.add("itembox");
-    const newinputitemtitle = document.createElement("input");
-    newinputitemtitle.classList.add("itemtitle");
-    newinputitemtitle.setAttribute("type", "text");
-    newinputitemtitle.setAttribute("placeholder", "click to edit...");
-    newitembox.appendChild(newinputitemtitle);
-    const newtododeletebtn = document.createElement("button");
-    newtododeletebtn.classList.add("tododeletebtn");
-    const newtododeleteicon = document.createElement("i");
-    newtododeleteicon.classList.add("fas", "fa-trash", "tododeleteicon");
-    newtododeletebtn.appendChild(newtododeleteicon);
-    newitembox.appendChild(newtododeletebtn);
-    const newtodomovebtn = document.createElement("button");
-    newtodomovebtn.classList.add("todomovebtn");
-    const newtodomoveicon = document.createElement("i");
-    newtodomoveicon.classList.add(
+    let itembox = document.createElement("div");
+    itembox.classList.add("itembox");
+    const inputitemtitle = document.createElement("input");
+    inputitemtitle.classList.add("itemtitle");
+    inputitemtitle.setAttribute("type", "text");
+    inputitemtitle.setAttribute("placeholder", "click to edit...");
+    inputitemtitle.value = value;
+    itembox.appendChild(inputitemtitle);
+    const tododeletebtn = document.createElement("button");
+    tododeletebtn.classList.add("tododeletebtn");
+    const tododeleteicon = document.createElement("i");
+    tododeleteicon.classList.add("fas", "fa-trash", "tododeleteicon");
+    tododeletebtn.appendChild(tododeleteicon);
+    itembox.appendChild(tododeletebtn);
+    const todomovebtn = document.createElement("button");
+    todomovebtn.classList.add("todomovebtn");
+    const todomoveicon = document.createElement("i");
+    todomoveicon.classList.add(
       "fas",
       "fa-chevron-circle-right",
       "todomoveicon"
     );
-    newtodomovebtn.appendChild(newtodomoveicon);
-    newitembox.appendChild(newtodomovebtn);
-    todoitemboxcontainer.appendChild(newitembox);
-    console.log(todoitemboxcontainer);
-    newtododeletebtn.addEventListener("click", (e) => {
+    todomovebtn.appendChild(todomoveicon);
+    itembox.appendChild(todomovebtn);
+    todoitemboxcontainer.appendChild(itembox);
+    tododeletebtn.addEventListener("click", (e) => {
       e.target.closest(".itembox").remove();
       itemCount--;
       listcount.innerText = `${itemCount} | `;
     });
-    newtodomovebtn.addEventListener("click", () => {
-      console.log("Move button clicked");
+    todomovebtn.addEventListener("click", () => {
+      itembox.style.display = "none";
+      itemCount--;
+      listcount.innerText = `${itemCount} | `;
+      movetoinprogress(inputitemtitle.value);
     });
+  });
+
+  additemintodo();
+};
+
+let progitemcount = 0;
+const movetoinprogress = (itemvalue) => {
+  progitemcount++;
+  listcountprog.innerText = progitemcount;
+  let progitembox = document.createElement("div");
+  progitembox.classList.add("itembox");
+  const proginputitemtitle = document.createElement("input");
+  proginputitemtitle.classList.add("itemtitle");
+  proginputitemtitle.setAttribute("type", "text");
+  proginputitemtitle.setAttribute("placeholder", "click to edit...");
+  proginputitemtitle.value = itemvalue;
+  progitembox.appendChild(proginputitemtitle);
+  const progmovebtn = document.createElement("button");
+  progmovebtn.classList.add("progmovebtn");
+  const progmoveicon = document.createElement("i");
+  progmoveicon.classList.add("fas", "fa-check-circle", "progmoveicon");
+  progmovebtn.appendChild(progmoveicon);
+  progitembox.appendChild(progmovebtn);
+  const progtimer = document.createElement("input");
+  progtimer.classList.add("itemtimer");
+  progtimer.setAttribute("type", "datetime-local");
+  progitembox.appendChild(progtimer);
+  const itemtimer = document.createElement("p");
+  itemtimer.classList.add("tasktimertext");
+  progitembox.append(itemtimer);
+  progitemboxcontainer.appendChild(progitembox);
+  eachitemtime(progtimer, progmovebtn, itemtimer, progitembox, itemvalue);
+};
+
+const eachitemtime = (
+  progtimer,
+  progmovebtn,
+  itemtimer,
+  progitembox,
+  itemvalue
+) => {
+  let x;
+  let distance;
+  progtimer.addEventListener("input", () => {
+    if (x) {
+      clearInterval(x);
+    }
+    let useritemtime = new Date(progtimer.value).getTime();
+    let taskbooktimer;
+    x = setInterval(() => {
+      let systemtime = new Date().getTime();
+      distance = useritemtime - systemtime;
+      let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      let hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      if (distance < 0) {
+        clearInterval(x);
+        taskbooktimer = "Expired";
+        progitembox.style.display = "none";
+        progitemcount--;
+        listcountprog.innerText = `${progitemcount} | `;
+        movetodone(itemvalue);
+      } else if (days > 0) {
+        taskbooktimer =
+          days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+      } else if (hours > 0) {
+        taskbooktimer = hours + "h " + minutes + "m " + seconds + "s ";
+      } else if (minutes > 0) {
+        taskbooktimer = minutes + "m " + seconds + "s ";
+      } else {
+        taskbooktimer = seconds + "s ";
+      }
+      itemtimer.innerText = taskbooktimer;
+    }, 1000);
+    progtimer.style.display = "none";
+  });
+  progmovebtn.addEventListener("click", () => {
+    console.log("clicked");
+    if (distance > 0) {
+      if (confirm("Timer is still running, Do u want to mark task to done?")) {
+        clearInterval(x);
+        progitembox.style.display = "none";
+        progitemcount--;
+        listcountprog.innerText = `${progitemcount} | `;
+        movetodone(itemvalue);
+      } else {
+        return;
+      }
+    }
   });
 };
 
-additemintodo();
-if (
-  progitemboxcontainer.innerHTML.trim() === "" ||
-  doneitemboxcontainer.innerHTML.trim() === ""
-) {
-  const createNothingMessage = () => {
-    const nothing = document.createElement("p");
-    nothing.classList.add("nothingdata");
-    nothing.innerText = "No items available";
-    return nothing;
-  };
-  if (progitemboxcontainer.innerHTML.trim() === "") {
-    progitemboxcontainer.appendChild(createNothingMessage());
-  }
-  if (doneitemboxcontainer.innerHTML.trim() === "") {
-    doneitemboxcontainer.appendChild(createNothingMessage());
-  }
-}
-// const movetoinprogress = (itemCount, itemtitle) => {
-//   console.log("Function called");
-// listcountprog.innerText = itemCount;
-// itembox = document.createElement("div");
-// itembox.classList.add("itembox");
-// const inputitemtitle = document.createElement("input");
-// inputitemtitle.classList.add("itemtitle");
-// inputitemtitle.setAttribute("type", "text");
-// inputitemtitle.value = itemtitle;
-// itembox.appendChild(inputitemtitle);
-// const progdonebtn = document.createElement("button");
-// progdonebtn.classList.add("progdonebtn");
-// const progdoneicon = document.createElement("i");
-// progdoneicon.classList.add(
-//   "fas",
-//   "fa-chevron-circle-right",
-//   "progdoneicon"
-// );
-// progdonebtn.appendChild(progdoneicon);
-// itembox.appendChild(progdonebtn);
-// progitemboxcontainer.appendChild(itembox);
-// };
+let doneitemcount = 0;
+const movetodone = (itemvalue) => {
+  console.log(systimeonsave);
+  doneitemcount++;
+  listcountdone.innerText = doneitemcount;
+  let doneitembox = document.createElement("div");
+  doneitembox.classList.add("itembox");
+  const doneinputitemtitle = document.createElement("input");
+  doneinputitemtitle.classList.add("itemtitle");
+  doneinputitemtitle.setAttribute("type", "text");
+  doneinputitemtitle.setAttribute("contenteditable", "false");
+  doneinputitemtitle.value = itemvalue;
+  doneitembox.appendChild(doneinputitemtitle);
+  doneitemboxcontainer.appendChild(doneitembox);
+  if (timer.innerText === "Everyday") {
+    setInterval(() => {
+      const currentTime = new Date();
+      const timeDifference = currentTime - systimeonsave;
+      const hoursDifference = timeDifference / (1000 * 60 * 60);
 
+      if (hoursDifference >= 24) {
+        console.log("24 hrs passed");
+        systimeonsave = new Date();
+      }
+    }, 1000 * 60 * 60);
+  }
+};
 //add time if user selected date and time -- Done
 //add button in todo to move it to in progress or to done --- Done
-//if user select in progress ask for duration then add timer of that duration.
-//when timer adds move that item to done
+//if user select in progress ask for duration then add timer of that duration. --done
+//when timer adds move that item to done --done
 //store this notesbook in history and localstorage and display on landing page,
 // the data of each user
 //make site responsive

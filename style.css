@@ -452,18 +452,6 @@ body {
   align-items: center;
   justify-content: space-between;
 }
-.container .todo .todoitembox {
-  margin-block: 10px;
-  padding: 20px 20px 20px 10px;
-  background-color: #ffffff;
-  border-radius: 15px;
-  cursor: pointer;
-  border-left: 4px solid #61ce70;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-}
 .container .todo .itembox p,
 .container .inprogress .itembox p,
 .container .done .itembox p {
@@ -472,46 +460,10 @@ body {
   color: #454545;
   vertical-align: middle;
 }
-.container .todo .itembox input[type="checkbox"],
-.container .inprogress .itembox input[type="checkbox"],
-.container .done .itembox input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
-  border: 1px solid #d7d7d7;
-  border-radius: 4px;
-  background-color: #ffffff;
-  cursor: pointer;
-  position: relative;
-  vertical-align: bottom;
-}
-.container .todo .itembox input[type="checkbox"]:checked,
-.container .inprogress .itembox input[type="checkbox"]:checked,
-.container .done .itembox input[type="checkbox"]:checked {
-  background-color: #61ce70;
-  border-color: #61ce70;
-}
-.container .todo .itembox input[type="checkbox"]::after,
-.container .inprogress .itembox input[type="checkbox"]::after,
-.container .done .itembox input[type="checkbox"]::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: background 0.3s ease;
-  width: 10px;
-  height: 10px;
-  background: #61ce70;
-  display: none;
-  border-radius: 2px;
-}
-input[type="checkbox"]:checked::after {
-  display: block;
-  transition: background 0.3s ease;
-}
-.container .todo .itembox input {
+
+.container .todo .itembox input,
+.container .inprogress .itembox input,
+.container .done .itembox input{
   font-size: 16px;
   font-weight: 400;
   color: #454545;
@@ -524,7 +476,9 @@ input[type="checkbox"]:checked::after {
   outline: none;
   transition: 0.3s ease;
 }
-.container .todo .itembox input:focus {
+.container .todo .itembox input:focus,
+.container .inprogress .itembox input:focus,
+.container .done .itembox input:focus  {
   border-bottom: 1px solid #61ce70;
   outline: none;
 }
@@ -557,6 +511,50 @@ input[type="checkbox"]:checked::after {
   color: #61ce70 !important;
   cursor: pointer;
 }
+
+.container .inprogress .itembox input{
+    width: 90% !important;
+}
+.container .inprogress .itembox .progmovebtn {
+  font-size: 16px;
+  font-weight: 400;
+  background: transparent;
+  border: none !important;
+  outline: none;
+  cursor: pointer !important;
+  margin-right: 5px;
+}
+.container .inprogress .itembox .progmoveicon {
+  font-size: 16px;
+  font-weight: 400;
+  color: #61ce70 !important;
+  cursor: pointer !important;
+}
+.container .inprogress .itembox .itemtimer {
+    flex-basis: 100%;
+    font-size: 16px;
+    font-weight: 400;
+    color: #454545;
+    vertical-align: middle;
+    margin-top: 10px;
+    border: none;
+    border-bottom: 1px solid #d7d7d7;
+    cursor: text;
+    position: relative;
+    outline: none;
+    transition: 0.3s ease;
+}
+.container .todo .itembox .itemtimer:focus  {
+  border-bottom: 1px solid #61ce70;
+  outline: none;
+}
+.container .inprogress .itembox .tasktimertext {
+    flex-basis: 100%;
+    font-size: 16px;
+    font-weight: 400;
+    color: #61ce70;
+    margin-top: 10px;
+  }
 .footer {
   text-align: center;
   margin-top: 20px;
