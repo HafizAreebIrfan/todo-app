@@ -1,6 +1,5 @@
 const tasktitle = document.querySelector(".tasktitle");
 const taskdesc = document.querySelector(".taskdesc");
-const historyrow = document.querySelector(".historyrow");
 const list = document.querySelector(".list");
 const listtitle = document.querySelector(".listtitle");
 const listdesc = document.querySelector(".listdesc");
@@ -35,6 +34,9 @@ const everyday = document.querySelector("#everyday");
 const everydayboxtext = document.querySelector(".everydayboxtext");
 const landingsection = document.querySelector("#landing");
 let itemCount = 0;
+const emptymessage = document.querySelector(".emptymessage");
+const inprogemptymessage = document.querySelector(".inprogemptymessage");
+const doneemptymessage = document.querySelector(".doneemptymessage");
 
 createtaskbtn.addEventListener("click", () => {
   if (tasknameinput.value === "") {
@@ -117,9 +119,19 @@ const modalfunctionality = (taskinfoheading) => {
       e.target.closest(".itembox").remove();
       itemCount--;
       modallistcount.innerText = itemCount;
+      if (itemCount > 0) {
+        emptymessage.style.display = "none";
+      } else {
+        emptymessage.style.display = "block";
+      }
     });
 
     movebtn.addEventListener("click", () => {});
+    if (itemCount > 0) {
+      if (modalitemboxcontainer.hasChildNodes(emptymessage)) {
+        emptymessage.style.display = "none";
+      }
+    }
   });
   savetaskfunc(taskinfoheading);
 };
@@ -160,7 +172,7 @@ const savetaskfunc = (taskinfoheading) => {
     let everydayvalue = everyday.checked;
     let modaldate = modaldatetime.value;
     let usertime = new Date(modaldate).getTime();
-    systimeonsave = new Date().toLocaleTimeString();
+    systimeonsave = new Date();
     if (
       modaldesc.value === "" ||
       itemtitle.value === "" ||
@@ -196,6 +208,7 @@ const savetaskfunc = (taskinfoheading) => {
     }
   });
 };
+
 const moveintodo = (
   dateOrEveryday,
   itemCount,
@@ -241,11 +254,16 @@ const moveintodo = (
     }, 1000);
   }
 
+  let todoemptymessage;
+  todoemptymessage = document.createElement("p");
+  todoemptymessage.classList.add("todoemptymessage");
+  todoemptymessage.innerText = "Sorry, no tasks in todo";
   const additemintodo = () => {
     todoicon.addEventListener("click", () => {
-      itemCount++;
+      itemCount =
+        document.querySelectorAll(".listitemboxcontainer .itembox").length + 1;
       listcount.innerText = `${itemCount} | `;
-      let newitembox = document.createElement("div");
+      const newitembox = document.createElement("div");
       newitembox.classList.add("itembox");
       const newinputitemtitle = document.createElement("input");
       newinputitemtitle.classList.add("itemtitle");
@@ -269,36 +287,49 @@ const moveintodo = (
       newtodomovebtn.appendChild(newtodomoveicon);
       newitembox.appendChild(newtodomovebtn);
       todoitemboxcontainer.appendChild(newitembox);
+
       newtododeletebtn.addEventListener("click", (e) => {
         e.target.closest(".itembox").remove();
-        itemCount--;
+        itemCount = document.querySelectorAll(
+          ".listitemboxcontainer .itembox"
+        ).length;
         listcount.innerText = `${itemCount} | `;
+        if (todoitemboxcontainer.innerHTML.trim() === "") {
+          todoitemboxcontainer.appendChild(todoemptymessage);
+        } else {
+          todoitemboxcontainer.removeChild(todoemptymessage);
+        }
       });
       newtodomovebtn.addEventListener("click", () => {
         newitembox.style.display = "none";
-        itemCount--;
+        itemCount = document.querySelectorAll(
+          ".listitemboxcontainer .itembox"
+        ).length;
         listcount.innerText = `${itemCount} | `;
-        movetoinprogress(newinputitemtitle.value);
+        movetoinprogress(newinputitemtitle.value, todoemptymessage);
       });
+      if (todoitemboxcontainer.hasChildNodes(todoemptymessage)) {
+        todoitemboxcontainer.removeChild(todoemptymessage);
+      }
     });
   };
 
   itemvalue.forEach((value, index) => {
     listcount.innerText = `${itemCount} | `;
-    let itembox = document.createElement("div");
-    itembox.classList.add("itembox");
+    const todoitembox = document.createElement("div");
+    todoitembox.classList.add("itembox");
     const inputitemtitle = document.createElement("input");
     inputitemtitle.classList.add("itemtitle");
     inputitemtitle.setAttribute("type", "text");
     inputitemtitle.setAttribute("placeholder", "click to edit...");
     inputitemtitle.value = value;
-    itembox.appendChild(inputitemtitle);
+    todoitembox.appendChild(inputitemtitle);
     const tododeletebtn = document.createElement("button");
     tododeletebtn.classList.add("tododeletebtn");
     const tododeleteicon = document.createElement("i");
     tododeleteicon.classList.add("fas", "fa-trash", "tododeleteicon");
     tododeletebtn.appendChild(tododeleteicon);
-    itembox.appendChild(tododeletebtn);
+    todoitembox.appendChild(tododeletebtn);
     const todomovebtn = document.createElement("button");
     todomovebtn.classList.add("todomovebtn");
     const todomoveicon = document.createElement("i");
@@ -308,26 +339,41 @@ const moveintodo = (
       "todomoveicon"
     );
     todomovebtn.appendChild(todomoveicon);
-    itembox.appendChild(todomovebtn);
-    todoitemboxcontainer.appendChild(itembox);
+    todoitembox.appendChild(todomovebtn);
+    todoitemboxcontainer.appendChild(todoitembox);
     tododeletebtn.addEventListener("click", (e) => {
       e.target.closest(".itembox").remove();
       itemCount--;
       listcount.innerText = `${itemCount} | `;
+      if (todoitemboxcontainer.innerHTML.trim() === "") {
+        todoitemboxcontainer.appendChild(todoemptymessage);
+      } else {
+        todoitemboxcontainer.removeChild(todoemptymessage);
+      }
     });
     todomovebtn.addEventListener("click", () => {
-      itembox.style.display = "none";
+      todoitembox.style.display = "none";
       itemCount--;
       listcount.innerText = `${itemCount} | `;
-      movetoinprogress(inputitemtitle.value);
+      movetoinprogress(inputitemtitle.value, todoemptymessage);
+      if (itemCount === 0) {
+        todoitemboxcontainer.appendChild(todoemptymessage);
+      } else {
+        todoitemboxcontainer.removeChild(todoemptymessage);
+      }
     });
   });
 
   additemintodo();
+
+  edittitle.addEventListener("click", () => {
+    landingsection.classList.remove("hide");
+    list.classList.add("hide");
+  });
 };
 
 let progitemcount = 0;
-const movetoinprogress = (itemvalue) => {
+const movetoinprogress = (itemvalue, todoemptymessage) => {
   progitemcount++;
   listcountprog.innerText = progitemcount;
   let progitembox = document.createElement("div");
@@ -352,7 +398,21 @@ const movetoinprogress = (itemvalue) => {
   itemtimer.classList.add("tasktimertext");
   progitembox.append(itemtimer);
   progitemboxcontainer.appendChild(progitembox);
-  eachitemtime(progtimer, progmovebtn, itemtimer, progitembox, itemvalue);
+  eachitemtime(
+    progtimer,
+    progmovebtn,
+    itemtimer,
+    progitembox,
+    itemvalue,
+    todoemptymessage
+  );
+  if (progitemcount > 0) {
+    if (progitemboxcontainer.hasChildNodes(inprogemptymessage)) {
+      inprogemptymessage.style.display = "none";
+    } else if (progitemcount === 0) {
+      inprogemptymessage.style.display = "block";
+    }
+  }
 };
 
 const eachitemtime = (
@@ -360,7 +420,8 @@ const eachitemtime = (
   progmovebtn,
   itemtimer,
   progitembox,
-  itemvalue
+  itemvalue,
+  todoemptymessage
 ) => {
   let x;
   let distance;
@@ -385,7 +446,17 @@ const eachitemtime = (
         progitembox.style.display = "none";
         progitemcount--;
         listcountprog.innerText = `${progitemcount} | `;
-        movetodone(itemvalue);
+        movetodone(
+          itemvalue,
+          progitemboxcontainer,
+          progitemcount,
+          listcountprog,
+          todoemptymessage,
+          distance
+        );
+        if (progitemcount === 0) {
+          inprogemptymessage.style.display = "block";
+        }
       } else if (days > 0) {
         taskbooktimer =
           days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
@@ -401,14 +472,23 @@ const eachitemtime = (
     progtimer.style.display = "none";
   });
   progmovebtn.addEventListener("click", () => {
-    console.log("clicked");
     if (distance > 0) {
       if (confirm("Timer is still running, Do u want to mark task to done?")) {
         clearInterval(x);
         progitembox.style.display = "none";
         progitemcount--;
         listcountprog.innerText = `${progitemcount} | `;
-        movetodone(itemvalue);
+        movetodone(
+          itemvalue,
+          progitemboxcontainer,
+          progitemcount,
+          listcountprog,
+          todoemptymessage,
+          distance
+        );
+        if (progitemcount === 0) {
+          inprogemptymessage.style.display = "block";
+        }
       } else {
         return;
       }
@@ -417,8 +497,14 @@ const eachitemtime = (
 };
 
 let doneitemcount = 0;
-const movetodone = (itemvalue) => {
-  console.log(systimeonsave);
+const movetodone = (
+  itemvalue,
+  progitemboxcontainer,
+  progitemcount,
+  listcountprog,
+  todoemptymessage,
+  distance
+) => {
   doneitemcount++;
   listcountdone.innerText = doneitemcount;
   let doneitembox = document.createElement("div");
@@ -430,19 +516,67 @@ const movetodone = (itemvalue) => {
   doneinputitemtitle.value = itemvalue;
   doneitembox.appendChild(doneinputitemtitle);
   doneitemboxcontainer.appendChild(doneitembox);
-  if (timer.innerText === "Everyday") {
-    setInterval(() => {
-      const currentTime = new Date();
-      const timeDifference = currentTime - systimeonsave;
-      const hoursDifference = timeDifference / (1000 * 60 * 60);
-
-      if (hoursDifference >= 24) {
-        console.log("24 hrs passed");
-        systimeonsave = new Date();
+  const resettaskbook = () => {
+    if (timer.innerText === "Everyday") {
+      let usersystime = `${systimeonsave.getHours()}:${systimeonsave.getMinutes()}:${systimeonsave.getSeconds()}`;
+      let currenttime = new Date();
+      let nextDaySameTime = new Date(
+        systimeonsave.getTime() + 24 * 60 * 60 * 1000
+      );
+      console.log("time on save", usersystime);
+      console.log("next day same time", nextDaySameTime);
+      if (currenttime >= nextDaySameTime) {
+        console.log("Hide items");
+        doneitembox.style.display = "none";
+        doneitemcount = 0;
+        listcountdone.innerText = doneitemcount;
+      } else {
+        console.log("Items are still visible");
+        const inProgressItems = document.querySelectorAll(
+          ".progitemboxcontainer .itembox"
+        );
+        inProgressItems.forEach((item) => {
+          item.style.display = "none";
+        });
+        const doneItems = document.querySelectorAll(
+          ".doneitemboxcontainer .itembox"
+        );
+        doneItems.forEach((item) => {
+          item.style.display = "none";
+          doneitemcount = 0;
+          listcountdone.innerText = doneitemcount;
+        });
+        const todoItems = document.querySelectorAll(
+          ".listitemboxcontainer .itembox"
+        );
+        todoItems.forEach((item) => {
+          item.style.display = "block";
+          const deleteBtn = item.querySelector(".tododeletebtn");
+          const moveBtn = item.querySelector(".todomovebtn");
+          deleteBtn.style.marginLeft = "10px";
+          moveBtn.style.marginLeft = "5px";
+          if (todoItems.length > 0) {
+            todoemptymessage.style.display = "none";
+          } else {
+            todoemptymessage.style.display = "block";
+          }
+          listcount.innerText = todoItems.length;
+        });
       }
-    }, 1000 * 60 * 60);
+    }
+  };
+  resettaskbook();
+  if (doneitemcount > 0) {
+    if (doneitemboxcontainer.hasChildNodes(doneemptymessage)) {
+      doneemptymessage.style.display = "none";
+    }
   }
 };
+const startTimerCheck = () => {
+  setInterval(resettaskbook, 1000 * 60 * 60);
+};
+
+startTimerCheck();
 //add time if user selected date and time -- Done
 //add button in todo to move it to in progress or to done --- Done
 //if user select in progress ask for duration then add timer of that duration. --done
